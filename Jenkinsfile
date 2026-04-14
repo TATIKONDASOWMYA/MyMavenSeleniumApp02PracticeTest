@@ -1,47 +1,39 @@
 pipeline {
-    agent any  // Use any available agent
+    agent any
 
     tools {
-        maven 'Maven'  // Ensure this matches the name configured in Jenkins
+        maven 'Maven'
     }
+
     stages {
+
         stage('Checkout') {
             steps {
-                git branch: 'master', url: 'https://github.com/TATIKONDASOWMYA/MyMavenSeleniumApp02PracticeTest.git'
+                git branch: 'master',
+                    url: 'https://github.com/TATIKONDASOWMYA/MyMavenSeleniumApp02PracticeTest.git',
+                    credentialsId: 'GitHubCredential'
             }
         }
 
         stage('Build') {
             steps {
-                sh 'mvn clean package'  // Run Maven build
+                sh 'mvn clean package'
             }
         }
 
         stage('Test') {
             steps {
-                sh 'mvn test'  // Run unit tests
+                sh 'mvn test'
             }
         }
-
-        
-        
-       
-        stage('Run Application') {
-            steps {
-                // Start the JAR application
-                sh 'mvn exec:java -Dexec.mainClass="com.example.App"'
-            }
-        }
-
-        
     }
 
     post {
         success {
-            echo 'Build and deployment successful!'
+            echo ' Build and Test successful!'
         }
         failure {
-            echo 'Build failed!'
+            echo ' Build failed!'
         }
     }
 }
