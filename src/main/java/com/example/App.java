@@ -8,11 +8,17 @@ import org.openqa.selenium.chrome.ChromeOptions;
 public class App {
     public static void main(String[] args) {
 
-        // Headless mode setup
         ChromeOptions options = new ChromeOptions();
-        options.addArguments("--headless=new");
-        options.addArguments("--disable-gpu");
-        options.addArguments("--window-size=1920,1080");
+	options.addArguments("--headless=new");
+	options.addArguments("--disable-gpu");
+	options.addArguments("--window-size=1920,1080");
+
+// ⭐ MOST IMPORTANT FIX
+	options.addArguments("--no-sandbox");
+	options.addArguments("--disable-dev-shm-usage");
+	options.addArguments("--remote-allow-origins=*");
+	options.setAcceptInsecureCerts(true);
+	options.addArguments("--ignore-certificate-errors");
 
         WebDriver driver = new ChromeDriver(options);
 
